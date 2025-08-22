@@ -11,7 +11,7 @@ const FileCard = ({ file }) => {
         rel="noopener noreferrer"
         className="text-blue-300 underline mt-2 block hover:text-blue-600 w-fit"
       >
-        Download
+        Open / Download
       </a>
     </div>
   );
