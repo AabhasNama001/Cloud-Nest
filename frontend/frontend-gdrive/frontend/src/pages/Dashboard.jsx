@@ -47,6 +47,13 @@ const Dashboard = () => {
     setFiles((prevFiles) => prevFiles.filter((file) => file._id !== id));
   };
 
+  // ✅ Delete handler for folders
+  const handleDeleteFolder = (id) => {
+    setFolders((prevFolders) =>
+      prevFolders.filter((folder) => folder._id !== id)
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-8">
       {/* Top Bar */}
@@ -91,7 +98,7 @@ const Dashboard = () => {
                 key={f._id}
                 className="transform hover:scale-105 transition duration-200"
               >
-                <FolderCard folder={f} />
+                <FolderCard folder={f} onDelete={handleDeleteFolder} />
               </div>
             ))}
           </div>

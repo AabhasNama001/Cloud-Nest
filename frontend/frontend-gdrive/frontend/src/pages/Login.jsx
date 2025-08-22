@@ -18,43 +18,64 @@ const Login = () => {
       login(res.data);
       navigate("/dashboard");
     } catch (err) {
-      alert(err.response.data.message);
+      alert(err.response?.data?.message || "Something went wrong");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded shadow-md w-96"
-      >
-        <h2 className="text-2xl mb-6 text-center">Login</h2>
-        <input
-          className="w-full mb-4 p-2 border rounded"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-        />
-        <input
-          className="w-full mb-4 p-2 border rounded"
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
-        <button className="w-full bg-blue-500 text-white p-2 rounded">
-          Login
-        </button>
-        <p className="mt-4 text-sm text-center">
-          Not registered?{" "}
-          <span
-            className="text-blue-500 cursor-pointer"
-            onClick={() => navigate("/register")}
+    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden p-4">
+      {/* Animated glowing orbs */}
+      <div className="absolute -top-20 -left-20 w-72 h-72 bg-purple-600 rounded-full filter blur-3xl opacity-40 animate-pulse"></div>
+      <div className="absolute top-40 -right-20 w-80 h-80 bg-pink-600 rounded-full filter blur-3xl opacity-40 animate-ping"></div>
+      <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-blue-600 rounded-full filter blur-3xl opacity-30 animate-bounce"></div>
+
+      {/* Login Card */}
+      <div className="w-full max-w-md relative z-10">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-gray-900/60 backdrop-blur-xl shadow-2xl rounded-2xl p-8 border border-gray-700"
+        >
+          <h2 className="text-3xl font-extrabold text-center text-white mb-8 tracking-wide">
+            Login to <span className="text-purple-400">ConvoAI</span>
+          </h2>
+
+          <div className="space-y-5">
+            <input
+              className="w-full px-4 py-3 rounded-xl border border-gray-700 bg-gray-800/60 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              onChange={handleChange}
+              required
+            />
+            <input
+              className="w-full px-4 py-3 rounded-xl border border-gray-700 bg-gray-800/60 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full mt-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg transform hover:scale-[1.03] transition-all"
           >
-            Register
-          </span>
-        </p>
-      </form>
+            Login
+          </button>
+
+          <p className="mt-6 text-center text-sm text-gray-400">
+            Not registered?{" "}
+            <span
+              onClick={() => navigate("/register")}
+              className="text-blue-400 font-semibold cursor-pointer hover:underline"
+            >
+              Create an account
+            </span>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };
