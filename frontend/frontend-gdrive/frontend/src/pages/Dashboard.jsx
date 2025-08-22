@@ -4,6 +4,7 @@ import API from "../services/api";
 import { useNavigate } from "react-router-dom";
 import FolderCard from "../components/FolderCard";
 import FileCard from "../components/FileCard";
+import { LogOut, FolderPlus } from "lucide-react"; // modern icons
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -42,49 +43,74 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl">Welcome, {user?.name}</h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-8">
+      {/* Top Bar */}
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="text-4xl font-extrabold tracking-wide">
+          Welcome, <span className="text-blue-400">{user?.name}</span>
+        </h1>
         <button
           onClick={logout}
-          className="bg-red-500 text-white px-4 py-2 rounded"
+          className="flex items-center gap-2 bg-red-500 hover:bg-red-600 px-5 py-2 rounded-xl shadow-md transition duration-200"
         >
-          Logout
+          <LogOut size={20} /> Logout
         </button>
       </div>
 
       {/* Create Folder */}
-      <div className="flex mb-6">
+      <div className="flex items-center mb-10 bg-gray-800 p-4 rounded-xl shadow-lg w-full max-w-xl">
         <input
           type="text"
-          placeholder="New Folder Name"
+          placeholder="Enter new folder name..."
           value={newFolderName}
           onChange={(e) => setNewFolderName(e.target.value)}
-          className="border p-2 rounded w-64 mr-2"
+          className="flex-1 bg-transparent border-b-2 border-gray-600 focus:border-blue-400 text-lg px-2 py-1 outline-none transition"
         />
         <button
           onClick={createFolder}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 px-4 py-2 ml-4 rounded-lg transition duration-200"
         >
-          Create Folder
+          <FolderPlus size={18} /> Create
         </button>
       </div>
 
-      <h2 className="text-xl mb-4">Folders</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+      {/* Folders Section */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-semibold mb-6 text-blue-400">
+          📂 Your Folders
+        </h2>
         {folders.length > 0 ? (
-          folders.map((f) => <FolderCard key={f._id} folder={f} />)
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {folders.map((f) => (
+              <div className="transform hover:scale-105 transition duration-200">
+                <FolderCard key={f._id} folder={f} />
+              </div>
+            ))}
+          </div>
         ) : (
-          <p>No folders yet</p>
+          <p className="text-gray-400 italic">
+            No folders yet. Create one above!
+          </p>
         )}
       </div>
 
-      <h2 className="text-xl mb-4">Files</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {/* Files Section */}
+      <div>
+        <h2 className="text-2xl font-semibold mb-6 text-green-400">
+          📁 Your Files
+        </h2>
         {files.length > 0 ? (
-          files.map((f) => <FileCard key={f._id} file={f} />)
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {files.map((f) => (
+              <div className="transform hover:scale-105 transition duration-200">
+                <FileCard key={f._id} file={f} />
+              </div>
+            ))}
+          </div>
         ) : (
-          <p>No files yet</p>
+          <p className="text-gray-400 italic">
+            No files yet. Upload or add one!
+          </p>
         )}
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 import FileCard from "../components/FileCard";
+import { LogOut, UploadCloud } from "lucide-react"; // modern icons
 
 const FolderView = () => {
   const { user, logout } = useContext(AuthContext);
@@ -18,11 +19,9 @@ const FolderView = () => {
 
     const fetchData = async () => {
       try {
-        // Folder info
         const folderRes = await API.get(`/folders/${folderId}`);
         setFolder(folderRes.data);
 
-        // Files inside folder
         const filesRes = await API.get(`/files?folderId=${folderId}`);
         setFiles(filesRes.data);
       } catch (err) {
@@ -69,29 +68,33 @@ const FolderView = () => {
   }, [folderId]);
 
   return (
-    <div className="p-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl">{folder?.name || "Folder"}</h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-8">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="text-4xl font-extrabold tracking-wide">
+          {folder?.name || "Folder"}
+        </h1>
         <button
           onClick={logout}
-          className="bg-red-500 text-white px-4 py-2 rounded"
+          className="flex items-center gap-2 bg-red-500 hover:bg-red-600 px-5 py-2 rounded-xl shadow-md transition duration-200"
         >
-          Logout
+          <LogOut size={20} /> Logout
         </button>
       </div>
 
-      <div className="mb-4 flex space-x-2">
+      {/* Breadcrumb */}
+      <div className="mb-8 flex items-center gap-2 text-gray-300 text-lg">
         <span
-          className="text-blue-500 cursor-pointer"
+          className="text-blue-400 cursor-pointer hover:underline"
           onClick={() => navigate("/dashboard")}
         >
           Home
         </span>
         {breadcrumb.map((b, idx) => (
-          <span key={b.id}>
-            /
+          <span key={b.id} className="flex items-center gap-2">
+            <span className="text-gray-500">/</span>
             <span
-              className="text-blue-500 cursor-pointer"
+              className="text-blue-400 cursor-pointer hover:underline"
               onClick={() => navigate(`/folder/${b.id}`)}
             >
               {b.name}
@@ -100,8 +103,9 @@ const FolderView = () => {
         ))}
       </div>
 
+      {/* Drag & Drop Upload */}
       <div
-        className="border-2 border-dashed p-8 mb-6 text-center rounded cursor-pointer"
+        className="border-2 border-dashed border-gray-600 hover:border-blue-400 transition p-10 mb-8 text-center rounded-2xl bg-gray-800/50 cursor-pointer shadow-lg"
         onClick={() => document.getElementById("fileInput").click()}
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
@@ -111,9 +115,17 @@ const FolderView = () => {
           }
         }}
       >
-        {fileToUpload
-          ? fileToUpload.name
-          : "Drag & drop file here or click to select"}
+        {fileToUpload ? (
+          <p className="text-green-400 font-medium">{fileToUpload.name}</p>
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-2 text-gray-400">
+            <UploadCloud size={40} className="text-blue-400" />
+            <p className="text-lg">
+              Drag & drop file here or{" "}
+              <span className="text-blue-400 underline">click to select</span>
+            </p>
+          </div>
+        )}
         <input
           type="file"
           id="fileInput"
@@ -122,20 +134,27 @@ const FolderView = () => {
         />
       </div>
 
+      {/* Upload Button */}
       <button
         onClick={handleUpload}
-        className="bg-green-500 text-white px-4 py-2 rounded"
+        className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl shadow-md mb-10 transition duration-200"
       >
-        Upload File
+        <UploadCloud size={20} /> Upload File
       </button>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {files.length > 0 ? (
-          files.map((f) => <FileCard key={f._id} file={f} />)
-        ) : (
-          <p>No files yet</p>
-        )}
-      </div>
+      {/* Files Grid */}
+      <h2 className="text-2xl font-semibold mb-6 text-green-400">📁 Files</h2>
+      {files.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {files.map((f) => (
+            <div className="transform hover:scale-105 transition duration-200">
+              <FileCard key={f._id} file={f} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-400 italic">No files yet in this folder.</p>
+      )}
     </div>
   );
 };

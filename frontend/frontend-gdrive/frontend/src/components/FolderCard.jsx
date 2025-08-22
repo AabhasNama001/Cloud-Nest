@@ -6,7 +6,7 @@ const FolderCard = ({ folder }) => {
   
   return (
     <div
-      className="bg-blue-100 p-4 rounded shadow cursor-pointer hover:bg-blue-200"
+      className="bg-blue-400 p-4 rounded shadow cursor-pointer hover:bg-gray-700"
       onClick={() => navigate(`/folder/${folder._id}`)}
     >
       <div className="text-4xl mb-2">📁</div>
