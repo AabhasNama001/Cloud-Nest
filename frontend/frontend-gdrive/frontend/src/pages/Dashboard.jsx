@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import FolderCard from "../components/FolderCard";
 import FileCard from "../components/FileCard";
 import { LogOut, FolderPlus } from "lucide-react";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -37,6 +38,7 @@ const Dashboard = () => {
       const res = await API.post("/folders", { name: newFolderName });
       setFolders([...folders, res.data]);
       setNewFolderName("");
+      toast.success("Folder created");
     } catch (err) {
       console.log(err);
     }
@@ -44,12 +46,14 @@ const Dashboard = () => {
 
   const handleDeleteFile = (id) => {
     setFiles((prevFiles) => prevFiles.filter((file) => file._id !== id));
+    toast.error("File Deleted!");
   };
 
   const handleDeleteFolder = (id) => {
     setFolders((prevFolders) =>
       prevFolders.filter((folder) => folder._id !== id)
     );
+    toast.error("Folder Deleted!");
   };
 
   return (

@@ -4,6 +4,7 @@ import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 import FileCard from "../components/FileCard";
 import { LogOut, UploadCloud } from "lucide-react"; // modern icons
+import { toast } from "react-toastify";
 
 const FolderView = () => {
   const { user, logout } = useContext(AuthContext);
@@ -39,6 +40,7 @@ const FolderView = () => {
     const formData = new FormData();
     formData.append("file", fileToUpload);
     formData.append("folderId", folderId);
+    toast.success("File uploaded");
 
     try {
       const res = await API.post("/files/upload", formData);

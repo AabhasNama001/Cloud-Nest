@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -16,6 +17,7 @@ const Login = () => {
     try {
       const res = await API.post("/auth/login", form);
       login(res.data);
+      toast.success("LoggedIn Successfully");
       navigate("/dashboard");
     } catch (err) {
       alert(err.response?.data?.message || "Something went wrong");
