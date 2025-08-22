@@ -42,6 +42,11 @@ const Dashboard = () => {
     }
   };
 
+  // ✅ Delete handler for files
+  const handleDeleteFile = (id) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file._id !== id));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-8">
       {/* Top Bar */}
@@ -83,7 +88,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {folders.map((f) => (
               <div
-                key={f._id} // ✅ move key here
+                key={f._id}
                 className="transform hover:scale-105 transition duration-200"
               >
                 <FolderCard folder={f} />
@@ -106,10 +111,11 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {files.map((f) => (
               <div
-                key={f._id} // ✅ same here
+                key={f._id}
                 className="transform hover:scale-105 transition duration-200"
               >
-                <FileCard file={f} />
+                {/* ✅ Pass delete handler */}
+                <FileCard file={f} onDelete={handleDeleteFile} />
               </div>
             ))}
           </div>

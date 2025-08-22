@@ -1,6 +1,10 @@
 import express from "express";
 import multer from "multer";
-import { uploadFile, getFiles } from "../controllers/fileController.js";
+import {
+  uploadFile,
+  getFiles,
+  deleteFile,
+} from "../controllers/fileController.js";
 import { protect } from "../middlewares/authMiddleware.js";
 
 // Configure multer storage
@@ -21,5 +25,8 @@ router.route("/").get(protect, getFiles);
 
 // Upload a file to a folder
 router.route("/upload").post(protect, upload.single("file"), uploadFile);
+
+// ✅ Delete a file by ID
+router.route("/:id").delete(protect, deleteFile);
 
 export default router;
