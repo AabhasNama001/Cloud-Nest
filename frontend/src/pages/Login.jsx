@@ -38,7 +38,7 @@ const Login = () => {
           className="bg-gray-900/60 backdrop-blur-xl shadow-2xl rounded-2xl p-8 border border-gray-700"
         >
           <h2 className="text-3xl font-extrabold text-center text-white mb-8 tracking-wide">
-            Login to <span className="text-purple-400">ConvoAI</span>
+            Login to <span className="text-purple-400">Cloud Nest</span>
           </h2>
 
           <div className="space-y-5">
