@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: caffora-app
+    name: Cloud-Nest
     env: node
     plan: free   # ✅ Free Instance (you can upgrade later if needed)
     rootDir: ./backend
