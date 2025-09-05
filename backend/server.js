@@ -23,18 +23,18 @@ app.use("/api/auth", authRoutes);
 app.use("/api/folders", folderRoutes);
 app.use("/api/files", fileRoutes);
 
-// Serve frontend build in production (✅ keep this AFTER APIs)
+// Serve frontend build in production (✅ AFTER APIs)
 const __dirname = path.resolve();
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-  // Fallback for React Router
-  app.get("*", (req, res) =>
+  // ✅ safer fallback for React Router (fixes Render crash)
+  app.get("/*", (req, res) =>
     res.sendFile(path.join(__dirname, "../frontend/build", "index.html"))
   );
 }
 
-// Error handling middleware (✅ should be after all other routes)
+// Error handling middleware
 app.use((req, res, next) => {
   res.status(404).json({ message: "Not Found" });
 });
