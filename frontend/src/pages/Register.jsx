@@ -28,7 +28,7 @@ const Register = () => {
     <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden p-4">
       {/* Animated glowing orbs */}
       <div className="absolute -top-20 -left-20 w-72 h-72 bg-purple-600 rounded-full filter blur-3xl opacity-40 animate-pulse"></div>
-      <div className="absolute top-40 -right-20 w-80 h-80 bg-pink-600 rounded-full filter blur-3xl opacity-40 animate-ping"></div>
+      <div className="absolute top-40 -right-20 w-80 h-80 bg-pink-600 rounded-full filter blur-3xl opacity-40 animate-spin"></div>
       <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-blue-600 rounded-full filter blur-3xl opacity-30 animate-bounce"></div>
 
       {/* Register Card */}
